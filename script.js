@@ -36,7 +36,25 @@ const INDICATORS = [
     }
 ]
 
-function render(key, rawData) {
+function getMinDate(rawData) {
+    const urlParams = new URLSearchParams(window.location.search);
+    let minDate = new Date(urlParams.get('min')).getTime();
+    if (isNaN(minDate)) {
+        minDate = new Date(rawData[0]['pr_date']).getTime();
+    }
+    return minDate;
+}
+
+function getMaxDate(rawData) {
+    const urlParams = new URLSearchParams(window.location.search);
+    let maxDate = new Date(urlParams.get('max')).getTime();
+    if (isNaN(maxDate)) {
+        maxDate = new Date(rawData[-1]['pr_date']).getTime();
+    }
+    return maxDate;
+}
+
+function render(key, rawData, dateBounds) {
     const config = INDICATORS.find(e => e.key === key);
     const dataset = getDataset(rawData, key);
 
@@ -63,6 +81,10 @@ function render(key, rawData) {
                     display: true,
                     time: {
                         stepSize: 7
+                    },
+                    ticks: {
+                        min: dateBounds['min'],
+                        max: dateBounds['max']
                     }
                 }],
                 yAxes: [{
@@ -132,12 +154,19 @@ function getDataset(data, key) {
     }
 }
 
-async function renderDocument() {
+async function renderDocument(snippets) {
     const rawData = await getData();
     rawData.reverse();
-    render('basic_reproduction_number', rawData);
-    render('incidence_new_infections', rawData);
-    render('icu_occupancy_rate', rawData);
-}
 
-renderDocument();
+    const dateBounds = {
+        min: getMinDate(rawData),
+        max: getMaxDate(rawData)
+    }
+
+    console.log("minDate: " + dateBounds['min']);
+    console.log("maxDate: " + dateBounds['max']);
+
+    snippets.forEach(function (snippet) {
+        render(snippet['data_key'], rawData, dateBounds);
+    });
+}

@@ -40,54 +40,33 @@
         </div>
 
         <div class="row">
-            <div class="col-lg">
-                <div class="chart-container">
-                    <canvas id="chart-reproduction" class="chart"></canvas>
-                </div>
-                <div class="chart-desc">
-                    <h6>Ampelfarben beim R-Wert:</h6>
-                    <ul>
-                        <li>R-Wert &lt; 1,1 = Grün</li>
-                        <li>R-Wert mindestens 3 Mal <em>in Folge</em> ≥ 1,1 = Gelb</li>
-                        <li> R-Wert mindestens 3 Mal <em>in Folge</em> ≥ 1,2 = Rot</li>
-                    </ul>
-                </div>
+            <div id="container-reproduction" class="col-lg">
             </div>
         </div>
         <div class="row">
-            <div class="col-lg">
-                <div class="chart-container">
-                    <canvas id="chart-infections" class="chart"></canvas>
-                </div>
-                <div class="chart-desc">
-                    <h6>Ampelfarben bei Neuinfektionen:</h6>
-                    <ul>
-                        <li>Zahl &lt; 20 je 100.000 Einwohner*innen = Grün</li>
-                        <li>Zahl ≥ 20 je 100.000 Einwohner*innen = Gelb</li>
-                        <li>Zahl ≥ 30 je 100.000 Einwohner*innen = Rot</li>
-                    </ul>
-                </div>
+            <div id="container-infections" class="col-lg">
             </div>
         </div>
         <div class="row">
-            <div class="col-lg">
-                <div class="chart-container">
-                    <canvas id="chart-icu" class="chart"></canvas>
-                </div>
-                <div class="chart-desc">
-                    <h6>Ampelfarben bei Auslastung der Intensivstationbetten:</h6>
-                    <ul>
-                        <li>Anteil &lt; 15 % = Grün</li>
-                        <li>Anteil ≥ 15 % = Gelb</li>
-                        <li>Anteil ≥ 25 % = Rot</li>
-                    </ul>
-                </div>
+            <div id="container-icu" class="col-lg">
             </div>
         </div>
     </div>
     </div>
 
     <script src="script.js"></script>
+    <script src="load_snippet.js"></script>
+    <script>
+        const SNIPPETS = [
+            { data_key: "basic_reproduction_number", target: "#container-reproduction"} ,
+            { data_key: "incidence_new_infections", target: "#container-infections"} ,
+            { data_key: "icu_occupancy_rate", target: "#container-icu"} ,
+        ];
+        SNIPPETS.forEach(function(snippet) {
+            load_snippet(snippet['data_key'] + "/snippet.html", snippet['target']);
+        });
+        renderDocument(SNIPPETS);
+    </script>
 </body>
 
 </html>

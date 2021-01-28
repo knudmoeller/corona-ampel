@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corona Ampel Berlin</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/0.5.7/chartjs-plugin-annotation.min.js"
+        integrity="sha256-Olnajf3o9kfkFGloISwP1TslJiWUDd7IYmfC+GdCKd4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+    <script src="../Plugin.Subtitle.min.js"></script>
+
+</head>
+
+<body>
+    <div id="container-reproduction">
+    </div>
+
+    <script src="../script.js"></script>
+    <script src="../load_snippet.js"></script>
+    <script>
+        const SNIPPETS = [
+            { data_key: "icu_occupancy_rate", target: "#container-reproduction" }
+        ];
+        SNIPPETS.forEach(function (snippet) {
+            load_snippet("snippet.html", snippet['target']);
+        });
+        renderDocument(SNIPPETS);
+    </script>
+</body>
+
+</html>
